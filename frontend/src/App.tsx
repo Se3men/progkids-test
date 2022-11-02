@@ -1,10 +1,10 @@
-import React from 'react';
+import Main from "./WebSocket"
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      some txt
+      <Main />
     </div>
   );
 }
