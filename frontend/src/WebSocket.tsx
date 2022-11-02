@@ -1,13 +1,18 @@
 import { useRef, useState } from 'react';
 
-// type Socket = WebSocket
+interface Messages {
+   id: number,
+   event: string,
+   username: string,
+   message: string,
+}
 
 const Main = () => {
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<Messages[]>([]);
     const [value, setValue] = useState<string>('');
-    const socket = useRef()
     const [connected, setConnected] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('')
+    const socket = useRef<any>()
 
     function connect() {
         socket.current = new WebSocket('ws://localhost:8080')
@@ -21,20 +26,23 @@ const Main = () => {
             }
             socket.current.send(JSON.stringify(message))
         }
-        socket.current.onmessage = (event) => {
+
+        socket.current.onmessage = (event: any) => {
             const message = JSON.parse(event.data)
             setMessages(prev => [message, ...prev])
         }
+
         socket.current.onclose = () => {
             console.log('Socket закрыт')
         }
+
         socket.current.onerror = () => {
             console.log('Socket произошла ошибка')
         }
     }
 
     const sendMessage = async () => {
-        const message = {
+        const message: Messages = {
             username,
             message: value,
             id: Date.now(),
@@ -69,14 +77,14 @@ const Main = () => {
                     <button onClick={sendMessage}>Отправить</button>
                 </div>
                 <div className="messages">
-                    {messages.map(mess =>
-                        <div key={mess.id}>
-                            {mess.event === 'connection'
+                    {messages.map(message =>
+                        <div key={message.id}>
+                            {message.event === 'connection'
                                 ? <div className="connection_message">
-                                    Пользователь {mess.username} подключился
+                                    Пользователь {message.username} подключился
                                 </div>
                                 : <div className="message">
-                                    {mess.username}. {mess.message}
+                                    {message.username}. {message.message}
                                 </div>
                             }
                         </div>
