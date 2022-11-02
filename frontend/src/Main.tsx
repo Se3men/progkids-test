@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
+import UserNotAuth from "./NotAuthUser"
 
 interface Messages {
-   id: number,
-   event: string,
-   username: string,
-   message: string,
+    id: number,
+    event: string,
+    username: string,
+    message: string,
 }
 
 const Main = () => {
@@ -55,16 +56,11 @@ const Main = () => {
 
     if (!connected) {
         return (
-            <div className="center">
-                <div className="form">
-                    <input
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
-                        type="text"
-                        placeholder="Введите ваше имя" />
-                    <button onClick={connect}>Войти</button>
-                </div>
-            </div>
+            <UserNotAuth
+                username={username}
+                setUsername={setUsername}
+                connect={connect}
+            />
         )
     }
 

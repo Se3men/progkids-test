@@ -1,4 +1,4 @@
-import Main from "./WebSocket"
+import Main from "./Main"
 import './App.css';
 
 function App() {
