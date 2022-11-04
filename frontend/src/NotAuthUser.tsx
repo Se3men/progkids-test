@@ -15,7 +15,7 @@ const UserNotAuth = (props: Props) => {
             <div className="form">
                 <input
                     value={username}
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={event => setUsername(event.target.value)}
                     type="text"
                     placeholder="Введите ваше имя" />
                 <button onClick={connect}>Войти</button>
